@@ -1,0 +1,5 @@
+streamlit
+numpy
+cv2
+opencv-contrib-python
+tempfile
