@@ -29,7 +29,31 @@ def get_filter(img, filter):
         return dilation
     return img # Return the image as is if the filter type does not match
 
-# Background subtractor function omitted for brevity - remains unchanged
+def get_bgsubtractor(BGS_TYPE):
+    # https://docs.opencv.org/3.4/d1/d5c/classcv_1_1bgsegm_1_1BackgroundSubtractorGMG.html
+    if BGS_TYPE == 'GMG':
+        return cv2.bgsegm.createBackgroundSubtractorGMG(initializationFrames = 120,
+                                                        decisionThreshold = 0.8)
+    # https://docs.opencv.org/3.4/d6/da7/classcv_1_1bgsegm_1_1BackgroundSubtractorMOG.html
+    if BGS_TYPE == 'MOG':
+        return cv2.bgsegm.createBackgroundSubtractorMOG(history = 200, nmixtures = 5,
+                                                       backgroundRatio = 0.7, noiseSigma=0)
+    # https://docs.opencv.org/3.4/d7/d7b/classcv_1_1BackgroundSubtractorMOG2.html
+    if BGS_TYPE == 'MOG2':
+        return cv2.createBackgroundSubtractorMOG2(history = 500, detectShadows = True,
+                                                  varThreshold = 100)
+    # https://docs.opencv.org/3.4/db/d88/classcv_1_1BackgroundSubtractorKNN.html
+    if BGS_TYPE == 'KNN':
+        return cv2.createBackgroundSubtractorKNN(history = 500, dist2Threshold=400,
+                                                 detectShadows = True)
+    # https://docs.opencv.org/3.4/de/dca/classcv_1_1bgsegm_1_1BackgroundSubtractorCNT.html
+    if BGS_TYPE == 'CNT':
+        return cv2.bgsegm.createBackgroundSubtractorCNT(minPixelStability=15,
+                                                        useHistory = True,
+                                                        maxPixelStability = 15*60,
+                                                        isParallel=True)
+    print('Invalid detector!')
+    sys.exit(0)
 
 def main():
     st.title("Background Subtraction and Filtering")
