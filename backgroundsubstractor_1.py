@@ -82,9 +82,9 @@ def main():
                 frame = cv2.resize(frame, (640, 360))  # Resize for faster processing
                 bg_mask = bg_subtractor.apply(frame)
 
-                for k_type in kernel_type:
-                    filtered_frame = get_filter(bg_mask, k_type)
-                    st.image(filtered_frame, channels="BGR", caption=f"Frame {frame_number} with {k_type} filter")
+                # for k_type in kernel_type:
+                #     filtered_frame = get_filter(bg_mask, k_type)
+                #     st.image(filtered_frame, channels="BGR", caption=f"Frame {frame_number} with {k_type} filter")
 
             frame_number += 1
 
