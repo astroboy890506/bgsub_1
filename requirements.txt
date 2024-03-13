@@ -1,5 +1,5 @@
 streamlit
 numpy
-cv2
+opencv-python
 opencv-contrib-python
 tempfile
