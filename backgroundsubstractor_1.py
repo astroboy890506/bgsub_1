@@ -75,9 +75,10 @@ if uploaded_file is not None and not st.session_state.processing_started:
 
         # Apply selected morphological operation
         bg_mask_filtered = get_filter(bg_mask, morph_type, kernel_type)
-
+        res = cv2.bitwise_and(frame, frame, mask=bg_mask_filtered)
+        
         # Convert mask to 3-channel BGR to display alongside the original frame
-        bg_mask_bgr = cv2.cvtColor(bg_mask_filtered, cv2.COLOR_GRAY2BGR)
+        bg_mask_bgr = cv2.cvtColor(res, cv2.COLOR_GRAY2BGR)
         combined_frame = np.hstack((frame_resized, bg_mask_bgr))
         
         pil_img = Image.fromarray(combined_frame)
