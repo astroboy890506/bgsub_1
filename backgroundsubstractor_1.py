@@ -75,12 +75,24 @@ if uploaded_file is not None and not st.session_state.processing_started:
 
         # Apply selected morphological operation
         bg_mask_filtered = get_filter(bg_mask, morph_type, kernel_type)
-        res = cv2.bitwise_and(frame, frame, mask=bg_mask_filtered)
-        
+        res = cv2.bitwise_and(frame_resized, frame_resized, mask=bg_mask_filtered)
+
+        # Adding text labels to each frame
+        label_font = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(frame_resized, "Original", (10, 20), label_font, 0.5, (255, 255, 255), 1)
+        cv2.putText(bg_mask, "Background Mask", (10, 20), label_font, 0.5, (255, 255, 255), 1)
+        cv2.putText(bg_mask_filtered, "Filtered Mask", (10, 20), label_font, 0.5, (255, 255, 255), 1)
+        cv2.putText(res, "Result", (10, 20), label_font, 0.5, (255, 255, 255), 1)
+    
         # Convert mask to 3-channel BGR to display alongside the original frame
         bg_mask_bgr = cv2.cvtColor(res, cv2.COLOR_GRAY2BGR)
-        combined_frame = np.hstack((frame_resized, bg_mask,  bg_mask_filtered,res))
+        bg_mask_filtered_bgr = cv2.cvtColor(bg_mask_filtered, cv2.COLOR_GRAY2BGR)
         
+        # Stacking images in a 2x2 grid
+        top_row = np.hstack((frame_resized, bg_mask_bgr))
+        bottom_row = np.hstack((bg_mask_filtered_bgr, res))
+        combined_frame = np.vstack((top_row, bottom_row))
+
         pil_img = Image.fromarray(combined_frame)
         stframe.image(pil_img, channels="BGR", use_column_width=True)
 
