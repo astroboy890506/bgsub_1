@@ -79,7 +79,7 @@ if uploaded_file is not None and not st.session_state.processing_started:
         
         # Convert mask to 3-channel BGR to display alongside the original frame
         bg_mask_bgr = cv2.cvtColor(res, cv2.COLOR_GRAY2BGR)
-        combined_frame = np.hstack((frame_resized, bg_mask_bgr))
+        combined_frame = np.hstack((frame_resized, bg_mask,  bg_mask_filtered,res))
         
         pil_img = Image.fromarray(combined_frame)
         stframe.image(pil_img, channels="BGR", use_column_width=True)
