@@ -55,7 +55,7 @@ if uploaded_file is not None and not st.session_state.processing_started:
         # Resize frame for faster processing
         frame_resized = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
         # Apply background subtraction
-        bg_mask = bg_subtractor.apply(frame_resized)
+        bg_mask = bg_subtractor_type.apply(frame_resized)
         # Convert mask to 3-channel BGR (to display alongside the original frame)
         bg_mask_bgr = cv2.cvtColor(bg_mask, cv2.COLOR_GRAY2BGR)
         # Stack both frames horizontally for display
