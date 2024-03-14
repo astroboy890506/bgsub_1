@@ -85,7 +85,7 @@ if uploaded_file is not None and not st.session_state.processing_started:
         cv2.putText(res, "Result", (10, 20), label_font, 0.5, (255, 255, 255), 1)
     
         # Convert mask to 3-channel BGR to display alongside the original frame
-        bg_mask_bgr = cv2.cvtColor(res, cv2.COLOR_GRAY2BGR)
+        bg_mask_bgr = cv2.cvtColor(bg_mask, cv2.COLOR_GRAY2BGR)
         bg_mask_filtered_bgr = cv2.cvtColor(bg_mask_filtered, cv2.COLOR_GRAY2BGR)
         
         # Stacking images in a 2x2 grid
