@@ -33,7 +33,19 @@ def get_filter(img, filter, kernel_type):
         step2 = cv2.morphologyEx(step1, cv2.MORPH_OPEN, kernel, iterations=2)
         final = cv2.dilate(step2, kernel, iterations=2)
         return final
-
+# Function to return a background subtractor
+def get_bgsubtractor(BGS_TYPE):
+    if BGS_TYPE == 'GMG':
+        return cv2.bgsegm.createBackgroundSubtractorGMG(initializationFrames=120, decisionThreshold=0.8)
+    elif BGS_TYPE == 'MOG':
+        return cv2.bgsegm.createBackgroundSubtractorMOG(history=200, nmixtures=5, backgroundRatio=0.7, noiseSigma=0)
+    elif BGS_TYPE == 'MOG2':
+        return cv2.createBackgroundSubtractorMOG2(history=500, detectShadows=True, varThreshold=100)
+    elif BGS_TYPE == 'KNN':
+        return cv2.createBackgroundSubtractorKNN(history=500, dist2Threshold=400, detectShadows=True)
+    elif BGS_TYPE == 'CNT':
+        return cv2.bgsegm.createBackgroundSubtractorCNT(minPixelStability=15, useHistory=True, maxPixelStability=15*60, isParallel=True)
+        
 # Existing get_bgsubtractor function...
 
 st.title("Background Subtraction Demo")
